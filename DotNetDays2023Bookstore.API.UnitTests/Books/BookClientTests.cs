@@ -13,21 +13,22 @@ public class BookClientTests
 {
     private readonly BookClient _bookClient;
     private readonly Fixture _fixture = new();
-    private readonly string _baseAddress = "https://www.google.com";
+    private readonly string _baseAddress = "https://www.example.com";
     private readonly HttpMessageHandler _nSubHandler = Substitute.For<HttpMessageHandler>();
     private readonly MockHttpMessageHandler _mockHandler = new();
 
     public BookClientTests()
     {
-        var httpClient = new HttpClient(_mockHandler)
-        {
-            BaseAddress = new Uri(_baseAddress)
-        };
-        _bookClient = new BookClient(httpClient);
+        // Example of using _nSubHandler
+        // var httpClient = new HttpClient(_nSubHandler)
+        // {
+        //     BaseAddress = new Uri(_baseAddress)
+        // };
+        // _bookClient = new BookClient(httpClient);
+
+        _bookClient = new BookClient(_mockHandler.ToHttpClient());
     }
     
-    // GetBook_SuccessfulResponse_ReturnsBook
-    // Given when then
     [Fact]
     public async Task When_Getting_A_Book_Returns_Successful_Response_Then_Returns_The_Book()
     {
@@ -60,6 +61,7 @@ public class BookClientTests
 
         var result = await _bookClient.GetBook(bookId);
 
+        var test = _nSubHandler.ReceivedCalls();
         _nSubHandler.ShouldHaveReceived(HttpMethod.Get, $"{_baseAddress}/books/{bookId}");
         result.Should().BeNull();
     }
