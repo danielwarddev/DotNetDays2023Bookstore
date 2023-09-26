@@ -6,6 +6,7 @@ namespace DotNetDays2023Bookstore.API.Books;
 public interface IBookService
 {
     Task LikeBook(int bookId, int userId);
+    Task ReviewBook(int bookId, int userId, string reviewContent);
 }
 
 public class BookService : IBookService

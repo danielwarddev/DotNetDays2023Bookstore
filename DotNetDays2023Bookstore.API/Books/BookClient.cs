@@ -8,8 +8,8 @@ public interface IBookClient
 {
     Task<Book?> GetBook(int id);
     Task<Book[]> GetBooksAddedInMonth(Month month);
-    Task<int> ProcessPurchasedBooks(IEnumerable<Book> books);
     Task UploadBookPhoto(string fileName, byte[] data);
+    Task<int> ProcessPurchasedBooks(IEnumerable<Book> books);
 }
 
 public class BookClient : IBookClient
